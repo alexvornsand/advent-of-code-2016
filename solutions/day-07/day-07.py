@@ -1,34 +1,33 @@
+# advent of code 2016
+# day 7
+
+import re
+
+file = 'input.txt'
+
 class TLSAssessor:
     def __init__(self, ips):
         self.ips = ips
 
-    def containsABBA(self, string):
-        return any([string[i] == string[i + 3] and string[i] != string[i + 1] and string[i + 1] == string[i + 2] for i in range(len(string) - 3)])
-
-    def matchesABAtoBAB(self, ip):
-        abas = []
-        for i in range(len(ip) - 2):
-            if ip[i] == ip[i + 2] and ip[i] != ip[i + 1] and '[' not in ip[i:i + 3] and ']' not in ip[i:i + 3]:
-                abas.append(ip[i:i + 3])
-        for aba in list(set(abas)):
-            a, b = [char for char in aba[:2]]
-            bab = ''.join([b, a, b])
-            safe_aba = re.search('(?:\[.*?\])*[^\[]*(' + aba + ').*', ip)
-            safe_bab = re.search('.*?\[.*?(' + bab + ').*\].*', ip)
-            if safe_aba  is not None and safe_bab is not None:
-                relevant = [char for char in re.sub('[a-z]', '_', ip)]
-                print(''.join(relevant))
-                print(safe_aba.start())
-                relevant[safe_aba.start():safe_aba.end()] = [char for char in aba]
-                relevant[safe_bab.start():safe_bab.end()] = [char for char in bab]
-                print(''.join(relevant))
-                return True
-        return False
-
     def meetsTLS(self, ip):
-        abba = self.containsABBA(ip)
-        safe_protected_strings = not any([self.containsABBA(segment) for segment in list(re.findall('\[.*?\]', ip))])
-        return abba and safe_protected_strings
-    
+        abba = re.search('(?P<a>\w)(?!(?P=a))(?P<b>\w)(?P=b)(?P=a)', ip) is not None
+        br_abba_br = re.search('\[[^\[\]]*(?P<a>\w)(?!(?P=a))(?P<b>\w)(?P=b)(?P=a)', ip) is None
+        return abba and br_abba_br
+
     def meetsSSL(self, ip):
-        return self.matchesABAtoBAB(ip)
+        return re.search('(?P<a>\w)(?!(?P=a))(?P<b>\w)(?P=a)[^\[\]]*(?=(?P<bracket>[\[\]])).*(?P=bracket)[^\[\]]*(?P=b)(?P=a)(?P=b)', ip) is not None
+    
+def part_1(tlsAssessor):
+    print('Part 1:', sum(tlsAssessor.meetsTLS(ip) for ip in tlsAssessor.ips))
+
+def part_2(tlsAssessor):
+    print('Part 2:', sum(tlsAssessor.meetsSSL(ip) for ip in tlsAssessor.ips))
+
+def main():
+    ips = open(file, 'r').read().splitlines()
+    tlsAssessor = TLSAssessor(ips)
+    part_1(tlsAssessor)
+    part_2(tlsAssessor)    
+
+if __name__ == '__main__':
+    main()
