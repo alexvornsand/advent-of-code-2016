@@ -16,3 +16,5 @@ A place for me to attempt 2016's [Advent of Code](https://adventofcode.com/2016/
 [Day 7 (Python)](/solutions/day-07)
 
 [Day 8 (Python)](/solutions/day-08)
+
+[Day 9 (Python)](/solutions/day-09)
