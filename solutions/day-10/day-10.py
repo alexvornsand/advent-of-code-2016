@@ -60,7 +60,7 @@ def part_1(factoryBots):
     print('Part 1:', factoryBots.bot_of_interest)
 
 def part_2(factoryBots):
-    print('Part 2:', int(factoryBots.data_store['output']['0']) * int(factoryBots.data_store['output']['1']) * int(factoryBots.data_store['output']['2']))
+    print('Part 2:', int(factoryBots.data_store['output']['0'][0]) * int(factoryBots.data_store['output']['1'][0]) * int(factoryBots.data_store['output']['2'][0]))
 
 def main():
     instructions = open(file, 'r').read().splitlines()
