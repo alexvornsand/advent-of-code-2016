@@ -19,9 +19,9 @@ A place for me to attempt 2016's [Advent of Code](https://adventofcode.com/2016/
 
 [Day 9 (Python)](/solutions/day-09)
 
-<!-- [Day 10 (Python)](/solutions/day-10)
+[Day 10 (Python)](/solutions/day-10)
 
-[Day 11 (Python)](/solutions/day-11)
+<!-- [Day 11 (Python)](/solutions/day-11)
 
 [Day 12 (Python)](/solutions/day-12)
 
